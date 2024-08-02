@@ -23,7 +23,7 @@ def test_env_variable_override(monkeypatch):
 
     config = APIConfig()
 
-    assert config.base_url == "https://api.override.com"
+    assert str(config.base_url) == "https://api.override.com/"
     assert config.retries == 5
     assert config.timeout == 10.0
     assert config.auth_type == "bearer"

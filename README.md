@@ -98,15 +98,15 @@ print(response)
 | **Flexible Request Methods (GET, POST)** | 🟡 **Partially Done** | **Must**            | GET and POST are implemented for both sync and async clients, but other methods like PUT, DELETE are not implemented yet.                                       |
 | **Error Handling**                       | 🟡 **Partially Done** | **Must**            | Some error handling is implemented, but lacks differentiation between retryable and non-retryable errors; custom exceptions are needed.                          |
 | **Detailed Exceptions**                  | 🔴 **Pending**       | **Must**            | Introduce custom exceptions like `ClientError`, `ServerError`, and `ValidationError`.                                                                            |
-| **Retry Backoff Strategy**               | 🔴 **Future Update** | **Future Update**    | Retries use a fixed 1-second delay; exponential backoff is not implemented.                                                                                     |
+| **Retry Backoff Strategy**               | 🔵 **Future Update** | **Future Update**    | Retries use a fixed 1-second delay; exponential backoff is not implemented.                                                                                     |
 | **Custom Retry Conditions**              | 🔴 **Pending**       | **Must**            | Retry conditions are fixed and not user-configurable.                                                                                                           |
 | **Client Lifecycle Management**          | 🟡 **Partially Done** | **Must**            | `close` is implemented for sync/async clients, but proper resource management is necessary to prevent resource leaks.                                            |
 | **Custom Authentication Handling**       | 🔴 **Pending**       | **Must**            | `auth_type` and `auth_credentials` in `APIConfig` are placeholders; no implementation is provided in the core clients.                                          |
 | **Custom Headers Support**               | ✅ **Implemented**   | **Must**            | Headers can be set via `APIConfig`.                                                                                                                             |
 | **Timeout Configuration**                | ✅ **Implemented**   | **Must**            | Timeout is configurable via `APIConfig`.                                                                                                                        |
 | **Base URL Configuration**               | ✅ **Implemented**   | **Must**            | Base URL is configurable via `APIConfig`.                                                                                                                       |
-| **Global Middleware/Interceptors**       | 🔴 **Future Update** | **Future Update**    | Useful for logging, error transformations, or request preprocessing.                                                                                            |
-| **Rate-Limiting Handling**               | 🔴 **Future Update** | **Future Update**    | No rate-limiting mechanism is implemented; support `429 Too Many Requests` headers.                                                                             |
+| **Global Middleware/Interceptors**       | 🔵 **Future Update** | **Future Update**    | Useful for logging, error transformations, or request preprocessing.                                                                                            |
+| **Rate-Limiting Handling**               | 🔵 **Future Update** | **Future Update**    | No rate-limiting mechanism is implemented; support `429 Too Many Requests` headers.                                                                             |
 | **API Client Decorators**                | 🟡 **Partially Done** | **Must**            | `api_call` decorator is defined in `APIClient`, but its usage is unclear and lacks examples or thorough testing.                                                |
 | **Test Cases for Core Features**         | 🔴 **Pending**       | **Must**            | Test cases are not provided or mentioned.                                                                                                                       |
 | **HTTPX Integration**                    | ✅ **Implemented**   | **Done**            | Fully leverages `httpx` for sync and async HTTP operations.                                                                                                     |
@@ -122,7 +122,7 @@ print(response)
 - ✅ **Implemented**: Fully implemented as per the requirements.
 - 🟡 **Partially Done**: Some aspects are implemented, but additional work is needed.
 - 🔴 **Pending**: Not implemented and requires development.
-- 🔴 **Future Update**: Planned for future releases.
+- 🔵 **Future Update**: Planned for future releases.
 
 ---
 

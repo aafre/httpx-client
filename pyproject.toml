@@ -11,10 +11,10 @@ requires-python = ">=3.7"
 license = { text = "MIT License" }
 keywords = ["api", "client", "httpx", "pydantic", "development"]
 authors = [
-  {name = "Amit Afre", email = "your.email@example.com"}
+  {name = "Amit Afre", email = "cyberathelet3@gmail.com"}
 ]
 maintainers = [
-  {name = "Your Name", email = "your.email@example.com"}
+  {name = "Amit Afre", email = "cyberathelet3@gmail.com"}
 ]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -31,9 +31,14 @@ classifiers = [
 ]
 
 dependencies = [
+  "black>=23.3.0",
   "httpx",
+  "loguru>=0.7.3",
   "pydantic",
   "pydantic-settings",
+  "pytest>=7.4.4",
+  "pytest-cov>=4.1.0",
+  "ruff>=0.11.11",
 ]
 
 [project.optional-dependencies]
@@ -50,3 +55,22 @@ dev = [
 [tool.setuptools.packages.find]
 where = ["api_client"]
 exclude = ["tests*"]
+
+[tool.pytest.ini_options]
+# Directories where pytest will look for tests
+testpaths = [
+  "api_client/config/tests",
+  "api_client/core/tests"
+]
+# File pattern for test modules
+python_files = [
+  "test_*.py"
+]
+# Naming pattern for test functions
+python_functions = [
+  "test_*"
+]
+# (Optional) Naming pattern for test classes
+python_classes = [
+  "*Tests"
+]

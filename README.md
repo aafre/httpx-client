@@ -1,7 +1,7 @@
 # APIClient
 🚀 APIClient - A flexible and powerful API client supporting both synchronous and asynchronous operations, built with httpx and pydantic for schema validation. 🌐🔧
 
-[![CI](https://github.com/yourusername/api_client/actions/workflows/ci.yml/badge.svg)](https://github.com/yourusername/api_client/actions/workflows/ci.yml)
+[![CI](https://github.com/yourusername/api_client/actions/workflows/ci.yml/badge.svg)](https://github.com/aafre/api_client/actions/workflows/ci.yml)
 [![PyPI version](https://badge.fury.io/py/api_client.svg)](https://badge.fury.io/py/api_client)
 [![Python versions](https://img.shields.io/pypi/pyversions/api_client.svg)](https://pypi.org/project/api_client/)
 
@@ -74,7 +74,7 @@ asyncio.run(main())
 ```
 
 
-### Custom Post-Processing
+### Custom Post-Processing hooks
 Define a custom post-processing function to modify API responses:
 
 ```python
@@ -86,6 +86,18 @@ client = APIClient(config, post_process_func=post_process)
 
 response = client.get("/endpoint")
 print(response)
+```
+
+
+Example: 
+
+```python
+# Automatic post-process result from API to extract nested data
+ def extract_payload(data):
+     return data.get("payload", {})
+
+config = APIConfig(base_url="https://api.example.com")
+client = APIClient(config, post_process_func=extract_payload)
 ```
 
 
@@ -144,7 +156,7 @@ print(response)
 14. **Pip Installation Support** (`setup.py` or equivalent for packaging).
 
 
-## Contributing
+## 🤝 Contributing
 
 Feel free to open issues or submit pull requests for any changes you would like to see. Contributions are welcome!
 

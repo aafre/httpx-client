@@ -138,22 +138,32 @@ client = APIClient(config, post_process_func=extract_payload)
 
 ---
 
-### Execution Order:
+### Development Roadmap & Milestones
 
-1. **Schema Validation** (Requires `schemas.py`).
-2. **Configuration via APIConfig** (Full implementation with validation).
-3. **Flexible Request Methods** (Add PUT, DELETE, PATCH support).
-4. **Error Handling** (Differentiate between retryable and non-retryable errors).
-5. **Detailed Exceptions** (Custom exception classes).
-6. **Custom Retry Conditions** (User-configurable retry logic).
-7. **Client Lifecycle Management** (Improve resource cleanup and lifecycle management).
-8. **Custom Authentication Handling** (`auth_type` and `auth_credentials` implementation).
-9. **Pluggable Serialization/Deserialization** (Support custom formats).
-10. **Dynamic URL Building** (Helper for query strings and paths).
-11. **Session Persistence** (Enable persistent connections).
-12. **Asynchronous Request Streaming** (Support for large response streams).
-13. **Test Cases for Core Features** (Unit and integration tests).
-14. **Pip Installation Support** (`setup.py` or equivalent for packaging).
+1. **schemas.py & validation hooks**  
+   Define `schemas.py` and wire up response validation.  
+2. **APIConfig enhancements**  
+   Implement full `APIConfig` with timeouts, retries, and `backoff_factor`.  
+3. **All HTTP methods**  
+   Add PUT, DELETE, and PATCH alongside existing GET/POST.  
+4. **Core retry, backoff & user-configurable conditions**  
+   Support exponential backoff and custom retry predicates.  
+5. **Error handling & detailed exceptions**  
+   Differentiate retryable vs. non-retryable errors and introduce `ClientError`, `ServerError`, etc.  
+6. **Authentication handlers & token refresh**  
+   Implement `auth_type`/`auth_credentials` for OAuth2, API-keys, and custom schemes.  
+7. **Client lifecycle improvements**  
+   Ensure proper `close`/`aclose` and cleanup of HTTP resources.  
+8. **Pluggable serialization & dynamic URL builder**  
+   Support custom serializers and helper utilities for query-string and path construction.  
+9. **Session persistence**  
+   Reuse `httpx.Client`/`AsyncClient` for connection pooling, cookies, and stateful headers.  
+10. **Asynchronous request streaming**  
+    Enable streaming large responses or file downloads without loading into memory.  
+11. **Test suite for core features**  
+    Write unit and integration tests covering all client workflows.  
+12. **Packaging**  
+    Add `setup.py`/`pyproject.toml` and publish the package to PyPI.  
 
 
 ## 🤝 Contributing

@@ -1,7 +1,7 @@
 # APIClient
 🚀 APIClient - A flexible and powerful API client supporting both synchronous and asynchronous operations, built with httpx and pydantic for schema validation. 🌐🔧
 
-[![CI](https://github.com/yourusername/api_client/actions/workflows/ci.yml/badge.svg)](https://github.com/aafre/api_client/actions/workflows/ci.yml)
+[![CI](https://github.com/aafre/APIClient/actions/workflows/ci.yml/badge.svg)](https://github.com/aafre/APIClient/actions/workflows/ci.yml)
 [![PyPI version](https://badge.fury.io/py/api_client.svg)](https://badge.fury.io/py/api_client)
 [![Python versions](https://img.shields.io/pypi/pyversions/api_client.svg)](https://pypi.org/project/api_client/)
 

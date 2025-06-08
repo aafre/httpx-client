@@ -21,14 +21,17 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
-          # pin to the version you have in uv.lock
           version: "0.7.8"
-          python-version: ${{ matrix.python-version }}
           enable-cache: true
           cache-dependency-glob: "uv.lock"
 
-      - name: Sync dependencies
-        run: uv sync --locked --all-extras --dev
+      - name: Install project Python
+        # Installs the Python version pinned in pyproject.toml (or you can override)
+        run: uv python install --python-version ${{ matrix.python-version }}
+
+      - name: Sync all dependencies
+        # --locked ensures it strictly uses uv.lock; --all-extras pulls in dev deps too
+        run: uv sync --locked --all-extras
 
       - name: Run tests
         run: uv run pytest

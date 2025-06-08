@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "api_client"
@@ -11,10 +11,10 @@ requires-python = ">=3.7"
 license = { text = "MIT License" }
 keywords = ["api", "client", "httpx", "pydantic", "development"]
 authors = [
-  {name = "Amit Afre", email = "cyberathelet3@gmail.com"}
+  { name = "Amit Afre", email = "cyberathelet3@gmail.com" }
 ]
 maintainers = [
-  {name = "Amit Afre", email = "cyberathelet3@gmail.com"}
+  { name = "Amit Afre", email = "cyberathelet3@gmail.com" }
 ]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -31,20 +31,19 @@ classifiers = [
 ]
 
 dependencies = [
-  "black>=23.3.0",
   "httpx",
   "loguru>=0.7.3",
   "pydantic",
   "pydantic-settings",
-  "pytest>=7.4.4",
-  "pytest-cov>=4.1.0",
-  "ruff>=0.11.11",
 ]
 
 [project.optional-dependencies]
 dev = [
-  "pytest",
+  "pytest>=7.4.4",
   "pytest-asyncio",
+  "pytest-cov>=4.1.0",
+  "black>=23.3.0",
+  "ruff>=0.11.11",
 ]
 
 [project.urls]
@@ -53,24 +52,18 @@ dev = [
 "Source" = "https://github.com/aafre/APIClient"
 
 [tool.setuptools.packages.find]
-where = ["api_client"]
-exclude = ["tests*"]
+where  = ["src"]
+include = ["api_client*"]
 
+
+# pytest discovery settings (optional if you switch tests to top-level `tests/`)
 [tool.pytest.ini_options]
-# Directories where pytest will look for tests
-testpaths = [
-  "api_client/config/tests",
-  "api_client/core/tests"
-]
-# File pattern for test modules
-python_files = [
-  "test_*.py"
-]
-# Naming pattern for test functions
-python_functions = [
-  "test_*"
-]
-# (Optional) Naming pattern for test classes
-python_classes = [
-  "*Tests"
-]
+testpaths = ["tests/"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+python_classes = ["*Tests"]
+
+# Hatchling-specific build settings
+[tool.hatch.build]
+# make your working copy importable in dev mode
+dev-mode-dirs = ["api_client"]

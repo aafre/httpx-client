@@ -49,9 +49,9 @@ dev = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/aafre/APIClient"
-"Bug Reports" = "https://github.com/aafre/APIClient/issues"
-"Source" = "https://github.com/aafre/APIClient"
+"Homepage" = "https://github.com/aafre/httpx-client"
+"Bug Reports" = "https://github.com/aafre/httpx-client/issues"
+"Source" = "https://github.com/aafre/httpx-client"
 
 # Hatchling-specific build settings
 [tool.hatch.build.targets.wheel]

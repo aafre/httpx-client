@@ -10,9 +10,8 @@ logger = logging.getLogger(__name__)
 
 class BaseAPIClient:
     """
-    BaseAPIClient is a flexible and powerful API client that supports both synchronous
-    and asynchronous operations. It includes features like retry mechanism, response
-    validation using pydantic, and post-processing of responses.
+    Base class for API clients, providing common functionality such as request handling,
+    response processing, and retry logic.
     """
 
     def __init__(
@@ -84,6 +83,25 @@ class BaseAPIClient:
             except httpx.RequestError as e:
                 logger.warning(f"Request attempt {attempt} failed: {e}")
                 time.sleep(1)
+
+        error_msg = f"Request failed after {self.retries} retries"
+        logger.error(error_msg)
+        raise httpx.RequestError(error_msg)
+
+    async def _retry_request_async(self, method: Callable, *args, **kwargs) -> httpx.Response:
+        """
+        Retry the async request for a specified number of attempts if it fails.
+        """
+        import asyncio
+        
+        for attempt in range(1, self.retries + 1):
+            try:
+                name = getattr(method, "__name__", "anonymous")
+                logger.info(f"Attempt {attempt} for {name} with args={args}, kwargs={kwargs}")
+                return await method(*args, **kwargs)
+            except httpx.RequestError as e:
+                logger.warning(f"Request attempt {attempt} failed: {e}")
+                await asyncio.sleep(1)
 
         error_msg = f"Request failed after {self.retries} retries"
         logger.error(error_msg)

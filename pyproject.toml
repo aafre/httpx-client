@@ -3,13 +3,13 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "api_client"
+name = "httpx-client"
 version = "0.1.0"
 description = "A highly customizable and easy-to-use API client built on top of httpx."
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 license = { text = "MIT License" }
-keywords = ["api", "client", "httpx", "pydantic", "development"]
+keywords = ["api", "client", "httpx", "pydantic", "async", "sync", "requests"]
 authors = [
   { name = "Amit Afre", email = "cyberathelet3@gmail.com" }
 ]
@@ -19,14 +19,16 @@ maintainers = [
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Developers",
-  "Topic :: Software Development :: Build Tools",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+  "Topic :: Software Development :: Libraries",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3 :: Only",
 ]
 
@@ -51,19 +53,56 @@ dev = [
 "Bug Reports" = "https://github.com/aafre/APIClient/issues"
 "Source" = "https://github.com/aafre/APIClient"
 
-[tool.setuptools.packages.find]
-where  = ["src"]
-include = ["api_client*"]
+# Hatchling-specific build settings
+[tool.hatch.build.targets.wheel]
+packages = ["src/api_client"]
 
-
-# pytest discovery settings (optional if you switch tests to top-level `tests/`)
+# pytest discovery settings
 [tool.pytest.ini_options]
 testpaths = ["tests/"]
 python_files = ["test_*.py"]
 python_functions = ["test_*"]
 python_classes = ["*Tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
 
-# Hatchling-specific build settings
-[tool.hatch.build]
-# make your working copy importable in dev mode
-dev-mode-dirs = ["api_client"]
+# Black code formatting
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+# Ruff linting
+[tool.ruff]
+target-version = "py38"
+line-length = 88
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]

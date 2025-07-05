@@ -19,7 +19,7 @@ class AsyncAPIClient(BaseAPIClient):
         )
 
     async def get(self, endpoint: str, schema: Type[BaseModel] = None, **kwargs) -> Any:
-        response = await self._retry_request(self.client.get, endpoint, **kwargs)
+        response = await self._retry_request_async(self.client.get, endpoint, **kwargs)
         response.raise_for_status()
         return self._process_response(response, schema)
 
@@ -31,11 +31,54 @@ class AsyncAPIClient(BaseAPIClient):
         schema: Type[BaseModel] = None,
         **kwargs,
     ) -> Any:
-        response = await self._retry_request(
+        response = await self._retry_request_async(
             self.client.post, endpoint, data=data, json=json, **kwargs
         )
         response.raise_for_status()
         return self._process_response(response, schema)
+
+    async def put(
+        self,
+        endpoint: str,
+        data: Any = None,
+        json: Any = None,
+        schema: Type[BaseModel] = None,
+        **kwargs,
+    ) -> Any:
+        response = await self._retry_request_async(
+            self.client.put, endpoint, data=data, json=json, **kwargs
+        )
+        response.raise_for_status()
+        return self._process_response(response, schema)
+
+    async def patch(
+        self,
+        endpoint: str,
+        data: Any = None,
+        json: Any = None,
+        schema: Type[BaseModel] = None,
+        **kwargs,
+    ) -> Any:
+        response = await self._retry_request_async(
+            self.client.patch, endpoint, data=data, json=json, **kwargs
+        )
+        response.raise_for_status()
+        return self._process_response(response, schema)
+
+    async def delete(self, endpoint: str, schema: Type[BaseModel] = None, **kwargs) -> Any:
+        response = await self._retry_request_async(self.client.delete, endpoint, **kwargs)
+        response.raise_for_status()
+        return self._process_response(response, schema)
+
+    async def head(self, endpoint: str, **kwargs) -> httpx.Response:
+        response = await self._retry_request_async(self.client.head, endpoint, **kwargs)
+        response.raise_for_status()
+        return response
+
+    async def options(self, endpoint: str, **kwargs) -> httpx.Response:
+        response = await self._retry_request_async(self.client.options, endpoint, **kwargs)
+        response.raise_for_status()
+        return response
 
     async def close(self):
         await self.client.aclose()

@@ -1,14 +1,17 @@
 # HTTPX Client
 
-A simple wrapper around HTTPX with basic retry logic and Pydantic validation.
+🚀 A flexible and powerful API client supporting both synchronous and asynchronous operations, built with httpx and pydantic for schema validation. 🌐🔧
 
 [![CI](https://github.com/aafre/APIClient/actions/workflows/ci.yml/badge.svg)](https://github.com/aafre/APIClient/actions/workflows/ci.yml)
 
-## Status: No Longer in Development
+## Features
 
-This package was an experiment in creating a higher-level API client wrapper. After evaluation, we've determined that HTTPX alone provides sufficient functionality for most use cases.
-
-**We recommend using [HTTPX](https://www.python-httpx.org/) directly instead.**
+- **Dual Mode**: Complete synchronous and asynchronous client support
+- **Schema Validation**: Automatic response validation with Pydantic models
+- **Retry Logic**: Built-in configurable retry mechanism with backoff
+- **Post-Processing**: Custom response transformation hooks
+- **Type Safety**: Full type hints and mypy compatibility
+- **Configuration Management**: Environment-aware settings with validation
 
 ## Installation
 
@@ -16,34 +19,107 @@ This package was an experiment in creating a higher-level API client wrapper. Af
 pip install httpx-client
 ```
 
-## Basic Usage
+## Quick Examples
+
+### Basic Usage
 
 ```python
 from api_client.core.sync_client import SyncAPIClient
 from api_client.config.api_config import APIConfig
 
-config = APIConfig(base_url="https://api.example.com")
+# Configure the client
+config = APIConfig(
+    base_url="https://jsonplaceholder.typicode.com",
+    timeout=10.0,
+    retries=3
+)
+
 client = SyncAPIClient(config)
 
-response = client.get("/users")
+# Use all HTTP methods
+users = client.get("/users")
+user = client.post("/users", json={"name": "Alice", "email": "alice@example.com"})
+client.put("/users/1", json={"name": "Alice Updated"})
+client.patch("/users/1", json={"email": "new-email@example.com"})
+client.delete("/users/1")
 ```
 
-## Why Not This Package?
-
-HTTPX already provides excellent functionality:
+### Async Support
 
 ```python
-import httpx
+import asyncio
+from api_client.core.async_client import AsyncAPIClient
 
-# This is cleaner and more direct:
-with httpx.Client(base_url="https://api.example.com") as client:
-    response = client.get("/users")
-    data = response.json()
+async def main():
+    client = AsyncAPIClient(config)
+    
+    users = await client.get("/users")
+    user = await client.post("/users", json={"name": "Bob"})
+    
+    await client.close()
+
+asyncio.run(main())
 ```
 
-For retry logic, use [httpx-retry](https://github.com/JWCook/requests-retry).  
-For validation, use [Pydantic](https://pydantic.dev/) directly.
+### Pydantic Schema Validation
+
+```python
+from pydantic import BaseModel
+
+class User(BaseModel):
+    id: int
+    name: str
+    email: str
+
+# Automatic validation and type safety
+user: User = client.get("/users/1", schema=User)
+print(f"User: {user.name} ({user.email})")
+```
+
+### Advanced Configuration
+
+```python
+config = APIConfig(
+    base_url="https://api.example.com",
+    timeout=30.0,
+    retries=5,
+    headers={
+        "User-Agent": "MyApp/1.0",
+        "Authorization": "Bearer your-token"
+    }
+)
+```
+
+### Custom Response Processing
+
+```python
+def extract_data(response):
+    return response.get("data", response)
+
+client = SyncAPIClient(config, post_process_func=extract_data)
+data = client.get("/api/users")  # Automatically extracts nested data
+```
+
+## Development
+
+```bash
+# Install dependencies
+uv sync --locked --all-extras
+
+# Run tests
+uv run pytest
+
+# Format and lint
+uv run black .
+uv run ruff check --fix .
+```
 
 ## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
+
+---
+
+## Status: No Longer Maintained
+
+This project was successfully completed and achieved all its original goals. However, it is no longer being actively maintained or developed. The functionality works as designed, but no new features or updates will be added.

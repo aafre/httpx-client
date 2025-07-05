@@ -1,8 +1,8 @@
 # HTTPX Client
 
-🚀 A flexible and powerful API client supporting both synchronous and asynchronous operations, built with httpx and pydantic for schema validation. 🌐🔧
+Lightweight HTTPX wrapper providing retry logic, Pydantic validation, and unified sync/async API client interfaces.
 
-[![CI](https://github.com/aafre/APIClient/actions/workflows/ci.yml/badge.svg)](https://github.com/aafre/APIClient/actions/workflows/ci.yml)
+[![CI](https://github.com/aafre/httpx-client/actions/workflows/ci.yml/badge.svg)](https://github.com/aafre/httpx-client/actions/workflows/ci.yml)
 
 ## Features
 

@@ -17,7 +17,7 @@ maintainers = [
   { name = "Amit Afre", email = "cyberathelet3@gmail.com" }
 ]
 classifiers = [
-  "Development Status :: 3 - Alpha",
+  "Development Status :: 7 - Inactive",
   "Intended Audience :: Developers",
   "Topic :: Software Development :: Libraries :: Python Modules",
   "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
